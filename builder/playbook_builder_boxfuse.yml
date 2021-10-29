@@ -1,0 +1,23 @@
+---
+- name: install builder
+  hosts: localhost
+  become: yes
+
+  tasks:
+
+  - name: Ensure git package is present
+    apt:
+      name: git
+      state: present
+  - name: Ensure maven package is present
+    apt:
+      name: maven
+      state: present
+  - name: Clone a repo with separate git directory
+    ansible.builtin.git:
+      repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+      dest: /tmp/boxfuse-sample-java-war-hello
+      clone: yes
+      update: yes
+  - name: Maven install package
+    shell: mvn package -f /tmp/boxfuse-sample-java-war-hello
