@@ -5,19 +5,39 @@
 
   tasks:
 
-  - name: Ensure git package is present
+  - name: update repository
     apt:
-      name: git
-      state: present
-  - name: Ensure maven package is present
+      update_cache: yes
+  - name: Ensure docker install
     apt:
-      name: maven
+      name: docker.io
       state: present
-  - name: Clone a repo with separate git directory
-    ansible.builtin.git:
-      repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
-      dest: /tmp/boxfuse-sample-java-war-hello
-      clone: yes
-      update: yes
-  - name: Maven install package
-    shell: mvn package -f /tmp/boxfuse-sample-java-war-hello
+ # - name: Ensure Dockerfile is clone
+ #   git:
+ #     repo: https://github.com/henre1989/Dockerfile_java_app.git
+ #     dest: /home/server1/Dockerfile_java_app
+  - name: Ensure python3-pip is install
+    apt:
+      name: python3-pip
+      state: present
+  - name: Ensure Docker SDK for Python is install
+    pip:
+      name: docker
+      state: present
+  - name: Ensure PyYAML is install
+    pip:
+      name: PyYAML
+      state: present
+  #- name: Login to DockerHub
+  #  docker_login:
+  #    username: 
+  #    password: 
+  #    state: present
+  - name: Ensure build docker image und push to dockerhub
+    docker_image:
+      build:
+        path: /tmp/devops_release/builder/
+      name: dimamuro/boxfuse
+      tag: 1.0.2
+      push: yes
+      source: build

@@ -1,24 +1,31 @@
 ---
-- name: get image boxfuse
+- name: published boxfuse app
   hosts: localhost
   become: yes
 
   tasks:
-  - name: Install OpenJDK
+  - name: update repository
     apt:
-      name: openjdk-11-jre-headless
-  - name: download tomcat server packages
-    get_url:
-      url: https://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.54/bin/apache-tomcat-9.0.54.tar.gz
-      dest: /usr/local
-  - name: extract tomcat packages
-    unarchive:
-      src: /usr/local/apache-tomcat-9.0.54.tar.gz
-      dest: /usr/local
-      remote_src: yes
-  - name: Copy war to the Tomcat webapps
-    copy:
-      src: /tmp/boxfuse-sample-java-war-hello/target/hello-1.0.war
-      dest: /usr/local/apache-tomcat-9.0.54/webapps
-  - name: start tomcat services
-    shell: nohup /usr/local/apache-tomcat-9.0.54/bin/startup.sh
+      update_cache: yes
+  - name: Ensure docker install
+    apt:
+      name: docker.io
+      state: present
+#  - name: Ensure python3-pip is install
+#    apt:
+#      name: python3-pip
+#      state: present
+#  - name: Ensure Docker SDK for Python is install
+#    pip:
+#      name: docker
+#      state: present
+#  - name: Ensure PyYAML is install
+#    pip:
+#      name: PyYAML
+#      state: present
+  - name: Ensure docker container is run
+    docker_container:
+      name: java_app
+      image: dimamuro/boxfuse:1.0.2
+      published_ports: 8081:8080
+      state: started
