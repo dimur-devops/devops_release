@@ -11,18 +11,18 @@
     apt:
       name: docker.io
       state: present
-#  - name: Ensure python3-pip is install
-#    apt:
-#      name: python3-pip
-#      state: present
-#  - name: Ensure Docker SDK for Python is install
-#    pip:
-#      name: docker
-#      state: present
-#  - name: Ensure PyYAML is install
-#    pip:
-#      name: PyYAML
-#      state: present
+  - name: Ensure python3-pip is install
+    apt:
+      name: python3-pip
+      state: present
+  - name: Ensure Docker SDK for Python is install
+    pip:
+      name: docker
+      state: present
+  - name: Ensure PyYAML is install
+    pip:
+      name: PyYAML
+      state: present
   - name: Ensure docker container is run
     docker_container:
       name: java_app
