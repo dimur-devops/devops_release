@@ -14,22 +14,18 @@
     apt:
       name: docker.io
       state: present
- # - name: Ensure Dockerfile is clone
- #   git:
- #     repo: https://github.com/henre1989/Dockerfile_java_app.git
- #     dest: /home/server1/Dockerfile_java_app
-#  - name: Ensure python3-pip is install
-#    apt:
-#      name: python3-pip
-#      state: present
-#  - name: Ensure Docker SDK for Python is install
-#    pip:
-#      name: docker
-#      state: present
-#  - name: Ensure PyYAML is install
-#    pip:
-#      name: PyYAML
-#      state: present
+  - name: Ensure python3-pip is install
+    apt:
+      name: python3-pip
+      state: present
+  - name: Ensure Docker SDK for Python is install
+    pip:
+      name: docker
+      state: present
+  - name: Ensure PyYAML is install
+    pip:
+      name: PyYAML
+      state: present
   - name: Login to DockerHub
     docker_login:
       username: dimamuro
