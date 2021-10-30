@@ -4,9 +4,7 @@ RUN apt-get install git -y
 RUN mkdir /tmp/build
 WORKDIR ~
 RUN git clone https://github.com/dimur-devops/boxfuse_release.git
-RUN mvn package -f boxfuse-sample-java-war-hello
-#RUN ls -la boxfuse-sample-java-war-hello/target
-CMD [ "mv -f", "boxfuse-sample-java-war-hello/target/hello-1.0.war", "/tmp/build/" ]
+RUN mvn package -f boxfuse_release
 
 FROM tomcat:latest
-COPY --from=maven ~/boxfuse-sample-java-war-hello/target/hello-1.0.war /usr/local/tomcat/webapps/hello-1.0.war
+COPY --from=maven ~/boxfuse_release/target/hello-1.0.war /usr/local/tomcat/webapps/hello-1.0.war
