@@ -3,7 +3,7 @@ RUN apt-get update
 RUN apt-get install git -y
 RUN mkdir /tmp/build
 WORKDIR ~
-RUN git clone https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+RUN git clone https://github.com/dimur-devops/boxfuse_release.git
 RUN mvn package -f boxfuse-sample-java-war-hello
 #RUN ls -la boxfuse-sample-java-war-hello/target
 CMD [ "mv -f", "boxfuse-sample-java-war-hello/target/hello-1.0.war", "/tmp/build/" ]

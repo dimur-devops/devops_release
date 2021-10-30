@@ -2,6 +2,15 @@
 - name: install builder
   hosts: localhost
   become: yes
+  vars:
+    docker_hub_secret: !vault |
+        $ANSIBLE_VAULT;1.1;AES256
+        63366139313761643036663262626634653434323131383531383765356530303935353837313766
+        3439663065653436656530653665316662356166643231320a323165643836323666346166313237
+        39623533326232373930396632633332616631333837623035376365383034633066613333346134
+        3234386663383766660a346536333761616233626639346433386131303566626132366230643132
+        31653933653961616634636538623166356264633063343866366535633661646333313663643932
+        3232306535353766353562386630333838303737333037633262
 
   tasks:
 
@@ -28,11 +37,11 @@
     pip:
       name: PyYAML
       state: present
-  #- name: Login to DockerHub
-  #  docker_login:
-  #    username: 
-  #    password: 
-  #    state: present
+  - name: Login to DockerHub
+    docker_login:
+      username: dimamuro
+      password: "{{ docker_hub_secret }}"
+      state: present
   - name: Ensure build docker image und push to dockerhub
     docker_image:
       build:
