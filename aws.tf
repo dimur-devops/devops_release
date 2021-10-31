@@ -7,11 +7,18 @@ terraform {
   }
 }
 
-provider "aws" {
- region  = "eu-central-1"
- profile = "myprofile"
+variable "access" {
+  type = string
+}
+variable "secret" {
+  type = string
 }
 
+provider "aws" {
+ region      = "eu-central-1"
+ access_key  = "${var.access}"
+ secret_key  = "${var.secret}"
+}
 
 resource "aws_instance" "Builder" {
  ami             = "ami-05f7491af5eef733a"
