@@ -9,8 +9,6 @@ terraform {
 
 provider "aws" {
  region = "eu-central-1"
- aws_access_key_id     = ${var.AWSAccessKeyid}
- aws_secret_access_key = ${var.AWSSecretKey}
 }
 
 resource "aws_instance" "Builder" {
