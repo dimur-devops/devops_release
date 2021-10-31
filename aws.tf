@@ -7,17 +7,9 @@ terraform {
   }
 }
 
-variable "access" {
-  type = string
-}
-variable "secret" {
-  type = string
-}
-
 provider "aws" {
- region      = "eu-central-1"
- access_key  = "${var.access}"
- secret_key  = "${var.secret}"
+ region  = "eu-central-1"
+ profile = "myprofile"
 }
 
 
