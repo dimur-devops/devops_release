@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+    
+    tools {
+        terraform 'Terra'
+    }
+    
+    stages {
+        stage('Git Clone') {
+            steps {
+                git 'https://github.com/dimur-devops/devops_release.git'
+            }
+        }
+        stage('Terraform init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan -var="$access" -var="$secret"'
+            }
+        }
+        stage('Terraform apply') {
+            steps {
+                sh 'terraform apply --auto-approve -var="$access" -var="$secret"'
+            }
+        }
+    }
+}
